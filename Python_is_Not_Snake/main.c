@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<windows.h>
-int snake[10][2], apple[1][2],len;			
+int snake[10][2], apple[1][2],len,i=1,j;
 /*初始化参数
 snake储存蛇的x,y坐标,apple储存苹果的x,y坐标,len蛇长
 (列0储存x,列1储存y)*/
@@ -21,19 +21,29 @@ void color(int a)
 /*输出主菜单*/
 int prt_menu()
 {
-	int input;
-	int i;
-	for (i = 0;i < 23; i++)
+	char input;
+	int i,j;
+	gotoxy(0, 0);
+	for (i = 0;i < 20; i++)
 	{
 		color(i * 0x0f);
-		printf("* * * * * * * * * * * * * * * * * * * * * * * \n");
-		Sleep(100);
+		for (j = 0; j < 20; j++)
+		{
+			printf("< >");
+			Sleep(7);
+		}
+		printf("\n");
+
 	}
-	gotoxy(0, 10);
-	printf("Python's Not Shanke(PNS) by S.wong(201800800101)\n");
-	printf("INTER Y FOR CONTINUE,OTHERS FOR EXIT\n");
-	scanf("%d", &input);
-	input -= 89;
+	gotoxy(0, 7);
+	printf("Python's Not Shanke(PNS) Entertsinment System by S.Wong\n");
+	Sleep(500);
+	printf("PRESS S TO START\n");
+	Sleep(500);
+	printf("I TO INFORMATION\n");
+	Sleep(500);
+	printf("OTHERS TO EXIT\n");
+	scanf("%c", &input);
 	return input;
 }
 
@@ -86,10 +96,41 @@ int continue_yn()
 int main()
 {
 	while (1)												//游戏整体循环
-	{
-		if (prt_menu())										//显示主菜单 如果返回真值则退出游戏整体循环
-		{
-			break;
+	{	
+		while(1)
+		{ 
+			switch (prt_menu())								//显示主菜单
+			{
+			case 'Y':
+			case 'y':
+				i = 1;
+				break;
+			case 'I':
+			case 'i':
+				gotoxy(0, 0);
+				for (i = 0; i < 20; i++)
+				{
+					color(i * 0x00);
+					for (j = 0; j < 20; j++)
+					{
+						printf("   ");
+					}
+					printf("\n");
+				}
+				gotoxy(0, 0);
+				color(0x01);
+				printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nALL RIGHTS RESERVED.\nPRESS ANY KEY TO MENU\n");
+				i = 0;
+				gets();
+				break;
+			default:
+				i = 0;
+				break;
+			}
+			if (i)
+			{
+				break;
+			}
 		}
 		init();												//初始化参数
 		prt_map();											//显示地图
