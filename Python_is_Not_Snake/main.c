@@ -4,37 +4,11 @@ int snake[10][2], apple[1][2],len;
 /*初始化参数
 snake储存蛇的x,y坐标,apple储存苹果的x,y坐标,len蛇长
 (列0储存x,列1储存y)*/
-/*光标移动到x,y*/
-void gotoxy(int x, int y)
-{
-	COORD pos;
-	pos.X = 2 * x;
-	pos.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);				//获得控制台光标位置
-}
-/*改变控制台输出颜色*/
-void color(int a)
-{
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), a);
-}
 
 /*输出主菜单*/
-int prt_menu()
+void prt_menu()
 {
-	int input;
-	int i;
-	for (i = 0;i < 23; i++)
-	{
-		color(i * 0x0f);
-		printf("* * * * * * * * * * * * * * * * * * * * * * * \n");
-		Sleep(100);
-	}
-	gotoxy(0, 10);
-	printf("Python's Not Shanke(PNS) by S.wong(201800800101)\n");
-	printf("INTER Y FOR CONTINUE,OTHERS FOR EXIT\n");
-	scanf("%d", &input);
-	input -= 89;
-	return input;
+
 }
 
 /*初始化参数*/
@@ -54,11 +28,7 @@ void prt_apple()
 {
 
 }
-/*控制蛇*/
-void ctrl_snake()
-{
 
-}
 /*蛇吃到苹果*/
 void eat_apple()
 {
@@ -87,10 +57,7 @@ int main()
 {
 	while (1)												//游戏整体循环
 	{
-		if (prt_menu())										//显示主菜单 如果返回真值则退出游戏整体循环
-		{
-			break;
-		}
+		prt_menu();											//显示主菜单
 		init();												//初始化参数
 		prt_map();											//显示地图
 		while (1)											//地图关卡循环(屏幕刷新循环)
