@@ -1,14 +1,50 @@
 #include<stdio.h>
 #include<windows.h>
-int snake[10][2], apple[1][2],len;			
+int snake[10][2], apple[1][2],len,i=1,j;
 /*初始化参数
 snake储存蛇的x,y坐标,apple储存苹果的x,y坐标,len蛇长
 (列0储存x,列1储存y)*/
+/*光标移动到x,y*/
+void gotoxy(int x, int y)
+{
+	COORD pos;
+	pos.X = 2 * x;
+	pos.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);				//获得控制台光标位置
+}
+/*改变控制台输出颜色*/
+void color(int a)
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), a);
+}
 
 /*输出主菜单*/
-void prt_menu()
+int prt_menu()
 {
+	char input;
+	int i,j;
+	gotoxy(0, 0);
+	for (i = 0;i < 20; i++)
+	{
+		color(i * 0x0f);
+		for (j = 0; j < 20; j++)
+		{
+			printf("< >");
+			Sleep(7);
+		}
+		printf("\n");
 
+	}
+	gotoxy(0, 7);
+	printf("Python's Not Shanke(PNS) Entertsinment System by S.Wong\n");
+	Sleep(500);
+	printf("PRESS S TO START\n");
+	Sleep(500);
+	printf("I TO INFORMATION\n");
+	Sleep(500);
+	printf("OTHERS TO EXIT\n");
+	scanf("%c", &input);
+	return input;
 }
 
 /*初始化参数*/
@@ -28,7 +64,11 @@ void prt_apple()
 {
 
 }
+/*控制蛇*/
+void ctrl_snake()
+{
 
+}
 /*蛇吃到苹果*/
 void eat_apple()
 {
@@ -56,8 +96,42 @@ int continue_yn()
 int main()
 {
 	while (1)												//游戏整体循环
-	{
-		prt_menu();											//显示主菜单
+	{	
+		while(1)
+		{ 
+			switch (prt_menu())								//显示主菜单
+			{
+			case 'Y':
+			case 'y':
+				i = 1;
+				break;
+			case 'I':
+			case 'i':
+				gotoxy(0, 0);
+				for (i = 0; i < 20; i++)
+				{
+					color(i * 0x00);
+					for (j = 0; j < 20; j++)
+					{
+						printf("   ");
+					}
+					printf("\n");
+				}
+				gotoxy(0, 0);
+				color(0x01);
+				printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nALL RIGHTS RESERVED.\nPRESS ANY KEY TO MENU\n");
+				i = 0;
+				gets();
+				break;
+			default:
+				i = 0;
+				break;
+			}
+			if (i)
+			{
+				break;
+			}
+		}
 		init();												//初始化参数
 		prt_map();											//显示地图
 		while (1)											//地图关卡循环(屏幕刷新循环)
