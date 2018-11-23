@@ -1,11 +1,13 @@
 #include<stdio.h>
 #include<windows.h>
-int snake[10][2], apple[1][2],len,i=1,j;
+int snake[10][2], apple[1][2],len,flag=1,j;
 /*初始化参数
 snake储存蛇的x,y坐标,apple储存苹果的x,y坐标,len蛇长
 (列0储存x,列1储存y)*/
 /*光标移动到x,y*/
-void gotoxy(int x, int y)
+void gotoxy
+
+(int x, int y)
 {
 	COORD pos;
 	pos.X = 2 * x;
@@ -39,11 +41,15 @@ int prt_menu()
 	printf("Python's Not Shanke(PNS) Entertsinment System by S.Wong\n");
 	Sleep(500);
 	printf("PRESS S TO START\n");
+
 	Sleep(500);
 	printf("I TO INFORMATION\n");
 	Sleep(500);
 	printf("OTHERS TO EXIT\n");
+	gotoxy(0, 11);
+	getchar();
 	scanf("%c", &input);
+	getchar();
 	return input;
 }
 
@@ -97,41 +103,33 @@ int main()
 {
 	while (1)												//游戏整体循环
 	{	
-		while(1)
+		while(1)											//MENU循环
 		{ 
-			switch (prt_menu())								//显示主菜单
+			switch (flag=prt_menu())								//显示主菜单
 			{
 			case 'Y':
 			case 'y':
-				i = 1;
 				break;
 			case 'I':
 			case 'i':
+				color(0x00);
+				system("cls");
 				gotoxy(0, 0);
-				for (i = 0; i < 20; i++)
-				{
-					color(i * 0x00);
-					for (j = 0; j < 20; j++)
-					{
-						printf("   ");
-					}
-					printf("\n");
-				}
-				gotoxy(0, 0);
-				color(0x01);
-				printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nALL RIGHTS RESERVED.\nPRESS ANY KEY TO MENU\n");
-				i = 0;
-				gets();
+				color(0x51);
+				printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nALL RIGHTS RESERVED.\nPRESS ANY KEY TO CONTINUE\n");
+				while (!(_kbhit()));
 				break;
 			default:
-				i = 0;
+				flag = 0;
 				break;
+			
 			}
-			if (i)
+			if (flag == 0)
 			{
 				break;
 			}
 		}
+
 		init();												//初始化参数
 		prt_map();											//显示地图
 		while (1)											//地图关卡循环(屏幕刷新循环)
