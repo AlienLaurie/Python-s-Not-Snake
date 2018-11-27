@@ -69,15 +69,13 @@ void inf_page()
 void showstate()
 {	
 	color(BLACK_YELLOW);
-	gotoxy(24, 8);
+	gotoxy(8, 23);
 	printf("SCORE:%d", score);
 }
 /*初始化参数*/
 void init()
 {
 	int i;
-	system("cls");
-	gotoxy(0, 0);
 	for (i = 0; i < 22; i++)
 	{
 		if (0 < i || i < 22)
@@ -87,26 +85,20 @@ void init()
 			color(BLACK_YELLOW);
 			printf("■■■■■■■■■■■■■■■■■■■■■■");
 			color(BLACK_GREEN);
-			printf("■\n");
+			printf("■");
 		}
 		else
 		{
 			color(BLACK_YELLOW);
-			printf("■■■■■■■■■■■■■■■■■■■■■■■■\n");
+			printf("■■■■■■■■■■■■■■■■■■■■■■■■");
 		}
 	}
-	gotoxy(0, 0);
-	color(BLACK_GREEN);
-	printf("■■■■■■■■■■■■■■■■■■■■■■■■\n");
-	gotoxy(0, 22);
-	color(BLACK_GREEN);
-	printf("■■■■■■■■■■■■■■■■■■■■■■■■\n");
 	color(BLACK_YELLOW);
-	gotoxy(24, 0);
+	gotoxy(0, 23);
 	printf("GROUP NUMBER:     ");
-	gotoxy(24,1);
+	gotoxy(1,23);
 	printf("ID:     NAME:S.W.");
-	gotoxy(24, 2);
+	gotoxy(2, 23);
 	printf("TERRITORY:WHOLE");
 	showstate();
 }
@@ -158,16 +150,22 @@ int main()
 	{	
 			switch (flag=prt_menu())						//显示主菜单
 			{
-			case 'S':
-			case 's':
+			case 'Y':
+			case 'y':
 				break;
 			case 'I':
 			case 'i':
 				inf_page();
 				break;
 			default:
-				return 0;
+				flag = 0;
+				break;
 			}
+			if (flag == 0)
+			{
+				return 10;
+			}
+
 		init();												//初始化参数
 		prt_map();											//显示地图
 		while (1)											//地图关卡循环(屏幕刷新循环)
