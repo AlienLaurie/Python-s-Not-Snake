@@ -1,7 +1,9 @@
 #include<stdio.h>
 #include<windows.h>
 #define BLACK_GREEN 0x0a															//黑底绿字
-int snake[10][2], apple[1][2],len,flag=1,j;
+#define BLACK_YELLOW 0x0e															//黑底黄字
+#define BLACK_RED																	//黑底红字
+int snake[10][2], apple[1][2],len,flag=1,j,score=0;
 /*初始化参数
 snake储存蛇的x,y坐标,apple储存苹果的x,y坐标,len蛇长
 (列0储存x,列1储存y)*/
@@ -61,12 +63,44 @@ void inf_page()
 	color(BLACK_GREEN);																
 	printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nTHANKS FOR PLAYING.\nPRESS ANY KEY TO CONTINUE\n");
 	while (!(_kbhit()));														//等待键入
-	return 0;
+}
+
+/*显示动态信息*/
+void showstate()
+{	
+	color(BLACK_YELLOW);
+	gotoxy(8, 23);
+	printf("SCORE:%d", score);
 }
 /*初始化参数*/
 void init()
 {
-
+	int i;
+	for (i = 0; i < 22; i++)
+	{
+		if (0 < i || i < 22)
+		{	
+			color(BLACK_GREEN);
+			printf("■");
+			color(BLACK_YELLOW);
+			printf("■■■■■■■■■■■■■■■■■■■■■■");
+			color(BLACK_GREEN);
+			printf("■");
+		}
+		else
+		{
+			color(BLACK_YELLOW);
+			printf("■■■■■■■■■■■■■■■■■■■■■■■■");
+		}
+	}
+	color(BLACK_YELLOW);
+	gotoxy(0, 23);
+	printf("GROUP NUMBER:     ");
+	gotoxy(1,23);
+	printf("ID:     NAME:S.W.");
+	gotoxy(2, 23);
+	printf("TERRITORY:WHOLE");
+	showstate();
 }
 
 /*显示地图*/
@@ -126,7 +160,6 @@ int main()
 			default:
 				flag = 0;
 				break;
-			
 			}
 			if (flag == 0)
 			{
