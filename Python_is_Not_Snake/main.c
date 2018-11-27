@@ -23,7 +23,7 @@ void color(int a)
 /*输出主菜单*/
 int prt_menu()
 {
-	char input;
+	char input=0;
 	int i,j;
 	gotoxy(0, 0);
 	for (i = 0;i < 20; i++)
@@ -47,12 +47,21 @@ int prt_menu()
 	Sleep(500);
 	printf("OTHERS TO EXIT\n");
 	gotoxy(0, 11);
-	getchar();
 	scanf("%c", &input);
-	getchar();
 	return input;
 }
 
+/*显示信息页*/
+void inf_page()
+{	
+	color(0x00);
+	system("cls");
+	gotoxy(0, 0);
+	color(0x0a);
+	printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nALL RIGHTS RESERVED.\nPRESS ANY KEY TO CONTINUE\n");
+	while (!(_kbhit()));
+	return 0;
+}
 /*初始化参数*/
 void init()
 {
@@ -99,25 +108,19 @@ int continue_yn()
 
 	return 1;												//返回是否继续
 }
+
 int main()
 {
 	while (1)												//游戏整体循环
 	{	
-		while(1)											//MENU循环
-		{ 
-			switch (flag=prt_menu())								//显示主菜单
+			switch (flag=prt_menu())						//显示主菜单
 			{
 			case 'Y':
 			case 'y':
 				break;
 			case 'I':
 			case 'i':
-				color(0x00);
-				system("cls");
-				gotoxy(0, 0);
-				color(0x51);
-				printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nALL RIGHTS RESERVED.\nPRESS ANY KEY TO CONTINUE\n");
-				while (!(_kbhit()));
+				inf_page();
 				break;
 			default:
 				flag = 0;
@@ -126,9 +129,8 @@ int main()
 			}
 			if (flag == 0)
 			{
-				break;
+				return 10;
 			}
-		}
 
 		init();												//初始化参数
 		prt_map();											//显示地图
