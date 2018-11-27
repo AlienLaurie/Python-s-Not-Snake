@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<windows.h>
+#define BLACK_GREEN 0x0a															//黑底绿字
 int snake[10][2], apple[1][2],len,flag=1,j;
 /*初始化参数
 snake储存蛇的x,y坐标,apple储存苹果的x,y坐标,len蛇长
@@ -26,19 +27,19 @@ int prt_menu()
 	char input=0;
 	int i,j;
 	gotoxy(0, 0);
-	for (i = 0;i < 20; i++)
+	for (i = 0;i < 20; i++)														//输出菜单背景
 	{
-		color(i * 0x0f);
+		color(i * 0x0f);														//让背景输出产生变色效果
 		for (j = 0; j < 20; j++)
 		{
 			printf("< >");
-			Sleep(7);
+			Sleep(7);															//让菜单背景的输出产生动画效果
 		}
 		printf("\n");
 
 	}
 	gotoxy(0, 7);
-	printf("Python's Not Shanke(PNS) Entertsinment System by S.Wong\n");
+	printf("Python's Not Shanke(PNS) Entertsinment System by S.Wong\n");		//菜单选项
 	Sleep(500);
 	printf("PRESS S TO START\n");
 
@@ -54,12 +55,12 @@ int prt_menu()
 /*显示信息页*/
 void inf_page()
 {	
-	color(0x00);
-	system("cls");
-	gotoxy(0, 0);
-	color(0x0a);
-	printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nALL RIGHTS RESERVED.\nPRESS ANY KEY TO CONTINUE\n");
-	while (!(_kbhit()));
+	color(0x00);																//将屏幕背景颜色设定为黑色
+	system("cls");																//清屏(黑色)
+	gotoxy(0, 0);																//重置光标
+	color(BLACK_GREEN);																
+	printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nTHANKS FOR PLAYING.\nPRESS ANY KEY TO CONTINUE\n");
+	while (!(_kbhit()));														//等待键入
 	return 0;
 }
 /*初始化参数*/
