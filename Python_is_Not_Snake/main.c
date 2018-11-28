@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<windows.h>
 #include<time.h>
@@ -107,7 +108,7 @@ void init()
 	gotoxy(0, 0);																 //重置坐标
 	for (i = 0; i < 22; i++)													 //输出地图
 	{
-		if (0 < i && i < 22)
+		if (0 < i && i < 21)
 		{	
 			color(BLACK_GREEN);
 			printf("□");
@@ -119,7 +120,7 @@ void init()
 		else
 		{
 			color(BLACK_GREEN);
-			printf("□□□□□□□□□□□□□□□□□□□□□□□\n");
+			printf("□□□□□□□□□□□□□□□□□□□□□□□□\n");
 		}
 	}
 	color(BLACK_YELLOW);															//输出信息
@@ -181,10 +182,11 @@ void ctrl_snake()
 				switch (dir)
 				{
 				case 0:
-					snake[0][1]++;
+					snake[0][1]--;														  //为什么会这样呢?明明是我先来的,为什么y轴方向会相反呢?
+
 					break;
 				case 1:
-					snake[0][1]--;
+					snake[0][1]++;
 					break;
 				case 2:
 					snake[0][0]--;
@@ -207,6 +209,8 @@ void ctrl_snake()
 void eat_apple()
 {
 	prt_apple();
+	score++;
+	showstate();
 }
 
 /*蛇撞墙*/
