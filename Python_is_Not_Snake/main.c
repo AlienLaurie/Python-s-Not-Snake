@@ -5,11 +5,11 @@
 #define BLACK_GREEN 0x0a															//黑底绿字
 #define BLACK_YELLOW 0x0e															//黑底黄字
 #define BLACK_RED 0x0c																//黑底红字
-int snake[10][2] = { { 11,11 } ,{ 11, 10 }, { 11, 9 }, { -1, -1} ,{ -1, -1} ,{ -1, -1}, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
-int apple_x, apple_y, len, flag = 1, j, score = 0,dir;
+int snake[10][2] = { { 11,11 } ,{ 11, 12 }, { 11, 13 }, { 11, 14} ,{ 11,15 } ,{ 11, 16}, { 11, 17 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
+int apple_x, apple_y, len=3, flag = 1, j, score = 0,dir='w';
 /*初始化参数
-snake储存蛇的x,y坐标,apple储存苹果的x,y坐标,len蛇长
-(列0储存x,列1储存y)*/
+snake储存蛇的x,y坐标,apple储存苹果的x,y坐标,len蛇长(最大为9)
+(列0储存x,列1储存y),dir保存方向*/
 /*光标移动到x,y*/
 void gotoxy
 
@@ -38,19 +38,19 @@ int prt_menu()
 		for (j = 0; j < 20; j++)
 		{
 			printf("< >");
-			Sleep(7);															//让菜单背景的输出产生动画效果
+//			Sleep(7);															//让菜单背景的输出产生动画效果
 		}
 		printf("\n");
 
 	}
 	gotoxy(0, 7);
 	printf("Python's Not Shanke(PNS) Entertsinment System by S.Wong\n");		//菜单选项
-	Sleep(500);
+//	Sleep(500);
 	printf("PRESS S TO START\n");
 
-	Sleep(500);
+//	Sleep(500);
 	printf("I TO INFORMATION\n");
-	Sleep(500);
+//	Sleep(500);
 	printf("OTHERS TO EXIT\n");
 	gotoxy(0, 11);
 	scanf("%c", &input);
@@ -65,7 +65,7 @@ void inf_page()
 	gotoxy(0, 0);																//重置光标
 	color(BLACK_GREEN);																
 	printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nTHANKS FOR PLAYING.\nPRESS ANY KEY TO CONTINUE\n");
-	while (!(_kbhit()));														//等待键入
+	while (!(kbhit()));														//等待键入
 }
 
 /*显示动态信息*/
@@ -102,6 +102,7 @@ void prt_apple()
 void init()
 {
 	int i;
+	len = 3;
 	srand((int)time(0));														 //通过系统时间获取随机数种子
 	color(0X00);																 //颜色设定为黑底黑字
 	system("cls");																 //清屏															
@@ -137,74 +138,69 @@ void init()
 /*控制蛇*/
 void ctrl_snake()
 {
-	int i;
+	int i, temp_x = snake[0][0], temp_y = snake[0][1];
+	color(BLACK_YELLOW);
 	gotoxy(snake[0][0], snake[0][1]);													 //输出蛇头
 	printf("¤");
-	for (i = 1; i < 10; i++)															 //输出蛇身
+	for (i = 1; i <= len; i++)															 //输出蛇身
 	{
-		if (snake[i][0] > 0)
+		color(BLACK_YELLOW);
+		gotoxy(snake[i][0], snake[i][1]);
+		printf("★");
+	}
+		color(BLACK_YELLOW);
+		gotoxy(snake[len+1][0], snake[len+1][1]);										 //蛇尾储输出空位
+		printf("■");
+		Sleep(2000-0.5*score);
+		if (kbhit())																	 //按键激活
 		{
-			gotoxy(snake[i][0], snake[i][1]);
-			printf("★");
+			dir = _kbhit();
 		}
-		else																			 //填补地图	空位
-		{
-			color(BLACK_YELLOW);
-			gotoxy(snake[i][0], snake[i][1]);
-			printf("■");
-		}
-		Sleep(350);
-		if (_kbhit())																	 //按键激活
-		{
-			switch (getchar())															 //获得按键
+			switch (dir)												    			 //获得按键
 			{
 			case 'w':
 			case 'W':
-				snake[0][1]++;
-				dir = 0;
-				break;
+				snake[0][1]--;
+			break;
 			case 's':
 			case 'S':
-				snake[0][1]--;
-				dir = 1;
-				break;
+				snake[0][1]++;
+			break;
 			case 'a':
 			case 'A':
 				snake[0][0]--;
-				dir = 2;
-				break;
+			break;
 			case 'd':
 			case 'D':
 				snake[0][0]++;
-				dir = 3;
-				break;
+			break;
 			default:																	  //保存按键方向									
 				switch (dir)
 				{
 				case 0:
-					snake[0][1]--;														  //为什么会这样呢?明明是我先来的,为什么y轴方向会相反呢?
-
-					break;
+					snake[0][1]--;
+				break;
 				case 1:
 					snake[0][1]++;
-					break;
+				break;
 				case 2:
 					snake[0][0]--;
-					break;
+				break;
 				case 3:
 					snake[0][0]++;
-					break;
-					break;
+				break;
+			break;
 				}
-			}
 		}
-		for (i = 1; i < 10; i++)														//蛇身移动(讲上一个蛇身的坐标移至下一个蛇身)
+			snake[1][0] = temp_x;
+			snake[1][1] = temp_y;
+		for (i = 2; i <= 10; i++)														//蛇身移动(讲上一个蛇身的坐标移至下一个蛇身)
 		{
 			snake[i][0] = snake[i + 1][0];
 			snake[i][1] = snake[i + 1][1];
 		}
-	}
 }
+
 /*蛇吃到苹果*/
 void eat_apple()
 {
@@ -256,7 +252,7 @@ int main()
 			if (snake[0][0] == 0 || snake[0][0] == 22 || snake[0][1] == 0 || snake[0][1] == 22)		//判断是否撞墙(蛇头坐标是否与墙重合)
 			{
 				wall();										//显示撞墙后效果
-				break;										//退出屏幕刷新循环
+				return 0;										//退出屏幕刷新循环
 			}
 			if (snake[0][0] == apple_x && snake[0][1] == apple_y)
 			{
@@ -265,7 +261,7 @@ int main()
 			if (len == 10)									//判断是否达到胜利条件(蛇长达到10)
 			{
 				win();										//显示胜利效果
-				break;										//退出屏幕刷新循环
+				return 0;										//退出屏幕刷新循环
 			}
 		}
 		if (continue_yn())
