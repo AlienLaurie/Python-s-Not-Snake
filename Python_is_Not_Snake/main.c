@@ -6,7 +6,7 @@
 #define BLACK_YELLOW 0x0e															//黑底黄字
 #define BLACK_RED 0x0c																//黑底红字
 #define RED_RED 0xc4																//红底红字
-int Snake[10][2] = { { 11,11 } ,{ 11, 12 }, { 11, 13 }, { 11, 14} ,{ 11,15 } ,{ 11, 16}, { 11, 17 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
+int Snake[20][2] = { { 11,11 } ,{ 11, 12 }, { 11, 13 }, { 11, 14} ,{ 11,15 } ,{ 11, 16}, { 11, 17 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
 int Apple_x, Apple_y, Len=3, Flag = 1, Score = 0;
 /*初始化参数
 snake储存蛇的x,y坐标,apple储存苹果的x,y坐标,Len蛇长(最大为9)
@@ -71,7 +71,7 @@ void inf_page()
 
 /*显示动态信息*/
 void showstate()
-{	
+{
 	color(BLACK_YELLOW);
 	gotoxy(24, 8);
 	printf("SCORE:%d", Score);
@@ -104,6 +104,12 @@ void init()
 {
 	int i;
 	Len = 3;
+	for (i = 0; i <= 20; i++)
+	{
+		Snake[i][0] = -1;
+		Snake[i][1] = -1;
+	}
+	Snake[0][0] =11 ; Snake[1][0] =11 ; Snake[2][0] =11 ; Snake[3][0] = 11; Snake[4][0] =11 ;  Snake[0][1] = 11; Snake[1][1] =12 ; Snake[2][1] =13 ; Snake[3][1] = 14; Snake[4][1] = 15;
 	srand((int)time(0));														 //通过系统时间获取随机数种子
 	color(0X00);																 //颜色设定为黑底黑字
 	system("cls");																 //清屏															
@@ -111,7 +117,7 @@ void init()
 	for (i = 0; i < 22; i++)													 //输出地图
 	{
 		if (0 < i && i < 21)
-		{	
+		{
 			color(BLACK_GREEN);
 			printf("□");
 			color(BLACK_YELLOW);
@@ -228,7 +234,7 @@ void wall()
 void win()
 {
 	color(RED_RED);
-	system("clr");
+	system("cls");
 	gotoxy(11, 11);
 	printf("WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW!YOU WIN!\nPRESS ANY KEY TO CONTINUE.");
 	while (kbhit());
@@ -239,7 +245,7 @@ int continue_yn()
 {
 	char input;
 	color(BLACK_GREEN);
-	system("clr");
+	system("cls");
 	gotoxy(0, 0);
 	do
 	{
@@ -279,7 +285,7 @@ int main()
 			{
 				eat_apple();
 			}
-			if (Len == 9)									//判断是否达到胜利条件(蛇长达到10)
+			if (Len == 19)									//判断是否达到胜利条件(蛇长达到10)
 			{
 				win();										//显示胜利效果
 				break;										//退出屏幕刷新循环
