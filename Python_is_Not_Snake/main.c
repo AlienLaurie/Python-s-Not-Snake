@@ -138,7 +138,7 @@ void init()
 /*控制蛇*/
 void ctrl_snake()
 {
-	int i, temp_x = snake[0][0], temp_y = snake[0][1];
+	int i;
 	color(BLACK_YELLOW);
 	gotoxy(snake[0][0], snake[0][1]);													 //输出蛇头
 	printf("¤");
@@ -152,10 +152,14 @@ void ctrl_snake()
 		gotoxy(snake[len+1][0], snake[len+1][1]);										 //蛇尾储输出空位
 		printf("■");
 		Sleep(1000-5*score);
+		for (i = len; i >= 0; i--)														//蛇身移动(讲上一个蛇身的坐标移至下一个蛇身)
+		{
+			snake[i + 1][0] = snake[i][0];
+			snake[i + 1][1] = snake[i][1];
+		}
 		if (_kbhit())																	 //按键激活
 		{
 			dir = getch();
-
 		}
 			switch (dir)												    			 //获得按键
 			{
@@ -196,13 +200,6 @@ void ctrl_snake()
 					break;
 			break;
 				}
-		}
-			snake[1][0] = temp_x;
-			snake[1][1] = temp_y;
-		for (i = len; i >0; i--)														//蛇身移动(讲上一个蛇身的坐标移至下一个蛇身)
-		{
-			snake[i+1][0] = snake[i][0];
-			snake[i+1][1] = snake[i][1];
 		}
 }
 
