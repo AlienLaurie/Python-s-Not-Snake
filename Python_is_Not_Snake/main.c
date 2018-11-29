@@ -85,7 +85,7 @@ void prt_apple()
 		flag = 0;
 		apple_x = (int)(20.0*rand() / RAND_MAX + 1.0);									//通过随机数为苹果坐标赋值(0<=rand()/RAND_MAX<=1)
 		apple_y = (int)(20.0*rand() / RAND_MAX + 1.0);
-		for (i = 0; i < 10; i++)														//检查生产苹果是否与蛇重合
+		for (i = 0; i <=len; i++)														//检查生产苹果是否与蛇重合
 		{
 			if (snake[i][0] == apple_x && snake[i][1] == apple_y)
 			{
@@ -142,7 +142,7 @@ void ctrl_snake()
 	color(BLACK_YELLOW);
 	gotoxy(snake[0][0], snake[0][1]);													 //输出蛇头
 	printf("¤");
-	for (i = 1; i <= len; i++)															 //输出蛇身
+	for (i = 1; i < len; i++)															 //输出蛇身
 	{
 		color(BLACK_YELLOW);
 		gotoxy(snake[i][0], snake[i][1]);
@@ -151,10 +151,11 @@ void ctrl_snake()
 		color(BLACK_YELLOW);
 		gotoxy(snake[len+1][0], snake[len+1][1]);										 //蛇尾储输出空位
 		printf("■");
-		Sleep(2000-0.5*score);
-		if (kbhit())																	 //按键激活
+		Sleep(1000-5*score);
+		if (_kbhit())																	 //按键激活
 		{
-			dir = _kbhit();
+			dir = getch();
+
 		}
 			switch (dir)												    			 //获得按键
 			{
@@ -177,27 +178,31 @@ void ctrl_snake()
 			default:																	  //保存按键方向									
 				switch (dir)
 				{
-				case 0:
+				case 'w':
+				case 'W':
 					snake[0][1]--;
-				break;
-				case 1:
+					break;
+				case 's':
+				case 'S':
 					snake[0][1]++;
-				break;
-				case 2:
+					break;
+				case 'a':
+				case 'A':
 					snake[0][0]--;
-				break;
-				case 3:
+					break;
+				case 'd':
+				case 'D':
 					snake[0][0]++;
-				break;
+					break;
 			break;
 				}
 		}
 			snake[1][0] = temp_x;
 			snake[1][1] = temp_y;
-		for (i = 2; i <= 10; i++)														//蛇身移动(讲上一个蛇身的坐标移至下一个蛇身)
+		for (i = len; i >0; i--)														//蛇身移动(讲上一个蛇身的坐标移至下一个蛇身)
 		{
-			snake[i][0] = snake[i + 1][0];
-			snake[i][1] = snake[i + 1][1];
+			snake[i+1][0] = snake[i][0];
+			snake[i+1][1] = snake[i][1];
 		}
 }
 
@@ -249,10 +254,10 @@ int main()
 		while (1)											//地图关卡循环(屏幕刷新循环)
 		{
 			ctrl_snake();									//控制蛇
-			if (snake[0][0] == 0 || snake[0][0] == 22 || snake[0][1] == 0 || snake[0][1] == 22)		//判断是否撞墙(蛇头坐标是否与墙重合)
+			if (snake[0][0] == 0 || snake[0][0] == 21 || snake[0][1] == 0 || snake[0][1] == 21)		//判断是否撞墙(蛇头坐标是否与墙重合)
 			{
 				wall();										//显示撞墙后效果
-				return 0;										//退出屏幕刷新循环
+				break;										//退出屏幕刷新循环
 			}
 			if (snake[0][0] == apple_x && snake[0][1] == apple_y)
 			{
@@ -261,7 +266,7 @@ int main()
 			if (len == 10)									//判断是否达到胜利条件(蛇长达到10)
 			{
 				win();										//显示胜利效果
-				return 0;										//退出屏幕刷新循环
+				break;										//退出屏幕刷新循环
 			}
 		}
 		if (continue_yn())
