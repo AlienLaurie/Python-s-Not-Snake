@@ -67,7 +67,7 @@ void inf_page()
 	system("cls");																//清屏(黑色)
 	gotoxy(0, 0);																//重置光标
 	color(BLACK_GREEN);
-	printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nTHANKS FOR PLAYING.\nPRESS ANY KEY TO CONTINUE\n");
+	printf("Python's Not Snake(PNS) Entertainment System By S.Wong\nGrapics by S.W.\nProgram by S.W.\nBGM:KARINKA\nTHANKS FOR PLAYING.\nPRESS ANY KEY TO CONTINUE\n");
 	while (!(kbhit()));															//等待键入
 	getch();
 }
@@ -130,9 +130,9 @@ void init()
 	}
 	color(BLACK_YELLOW);															//输出信息
 	gotoxy(24, 0);
-	printf("GROUP NUMBER:     ");
+	printf("GROUP NUMBER:N/A  ");
 	gotoxy(24, 1);
-	printf("ID:     NAME:S.W.");
+	printf("ID:101  NAME:S.W.");
 	gotoxy(24, 2);
 	printf("TERRITORY:WHOLE");
 	showstate();																	//输出动态信息
