@@ -39,19 +39,19 @@ int prt_menu()
 		for (j = 0; j < 20; j++)
 		{
 			printf("< >");
-//			Sleep(7);															//让菜单背景的输出产生动画效果
+			Sleep(7);															//让菜单背景的输出产生动画效果
 		}
 		printf("\n");
 
 	}
 	gotoxy(0, 7);
 	printf("Python's Not Shanke(PNS) Entertsinment System by S.Wong\n");		//菜单选项
-//	Sleep(500);
+	Sleep(500);
 	printf("PRESS S TO START\n");
 
-//	Sleep(500);
+	Sleep(500);
 	printf("I TO INFORMATION\n");
-//	Sleep(500);
+	Sleep(500);
 	printf("OTHERS TO EXIT\n");
 	gotoxy(0, 11);
 	scanf("%c", &input);
