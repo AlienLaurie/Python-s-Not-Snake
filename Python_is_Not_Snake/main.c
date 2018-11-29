@@ -5,10 +5,11 @@
 #define BLACK_GREEN 0x0a															//黑底绿字
 #define BLACK_YELLOW 0x0e															//黑底黄字
 #define BLACK_RED 0x0c																//黑底红字
-int snake[10][2] = { { 11,11 } ,{ 11, 12 }, { 11, 13 }, { 11, 14} ,{ 11,15 } ,{ 11, 16}, { 11, 17 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
-int apple_x, apple_y, len=3, flag = 1, j, score = 0,dir='w';
+#define RED_RED 0xc4																//红底红字
+int Snake[10][2] = { { 11,11 } ,{ 11, 12 }, { 11, 13 }, { 11, 14} ,{ 11,15 } ,{ 11, 16}, { 11, 17 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
+int Apple_x, Apple_y, Len=3, Flag = 1, Score = 0;
 /*初始化参数
-snake储存蛇的x,y坐标,apple储存苹果的x,y坐标,len蛇长(最大为9)
+snake储存蛇的x,y坐标,apple储存苹果的x,y坐标,Len蛇长(最大为9)
 (列0储存x,列1储存y),dir保存方向*/
 /*光标移动到x,y*/
 void gotoxy
@@ -73,7 +74,7 @@ void showstate()
 {	
 	color(BLACK_YELLOW);
 	gotoxy(24, 8);
-	printf("SCORE:%d", score);
+	printf("SCORE:%d", Score);
 }
 
 /*显示苹果*/
@@ -83,18 +84,18 @@ void prt_apple()
 	do
 	{
 		flag = 0;
-		apple_x = (int)(20.0*rand() / RAND_MAX + 1.0);									//通过随机数为苹果坐标赋值(0<=rand()/RAND_MAX<=1)
-		apple_y = (int)(20.0*rand() / RAND_MAX + 1.0);
-		for (i = 0; i <=len; i++)														//检查生产苹果是否与蛇重合
+		Apple_x = (int)(20.0*rand() / RAND_MAX + 1.0);									//通过随机数为苹果坐标赋值(0<=rand()/RAND_MAX<=1)
+		Apple_y = (int)(20.0*rand() / RAND_MAX + 1.0);
+		for (i = 0; i <=Len; i++)														//检查生产苹果是否与蛇重合
 		{
-			if (snake[i][0] == apple_x && snake[i][1] == apple_y)
+			if (Snake[i][0] == Apple_x && Snake[i][1] == Apple_y)
 			{
 				flag = 1;
 			}
 		}
 
 	} while (flag);
-	gotoxy(apple_x, apple_y);														//显示苹果
+	gotoxy(Apple_x, Apple_y);														//显示苹果
 	color(BLACK_RED);
 	printf("●");
 }
@@ -102,7 +103,7 @@ void prt_apple()
 void init()
 {
 	int i;
-	len = 3;
+	Len = 3;
 	srand((int)time(0));														 //通过系统时间获取随机数种子
 	color(0X00);																 //颜色设定为黑底黑字
 	system("cls");																 //清屏															
@@ -138,24 +139,25 @@ void init()
 /*控制蛇*/
 void ctrl_snake()
 {
+	static dir = 'w';
 	int i;
 	color(BLACK_YELLOW);
-	gotoxy(snake[0][0], snake[0][1]);													 //输出蛇头
+	gotoxy(Snake[0][0], Snake[0][1]);													 //输出蛇头
 	printf("¤");
-	for (i = 1; i < len; i++)															 //输出蛇身
+	for (i = 1; i < Len; i++)															 //输出蛇身
 	{
 		color(BLACK_YELLOW);
-		gotoxy(snake[i][0], snake[i][1]);
+		gotoxy(Snake[i][0], Snake[i][1]);
 		printf("★");
 	}
 		color(BLACK_YELLOW);
-		gotoxy(snake[len+1][0], snake[len+1][1]);										 //蛇尾储输出空位
+		gotoxy(Snake[Len+1][0], Snake[Len+1][1]);										 //蛇尾储输出空位
 		printf("■");
-		Sleep(1000-5*score);
-		for (i = len; i >= 0; i--)														//蛇身移动(讲上一个蛇身的坐标移至下一个蛇身)
+		Sleep(200-5*Score);																 //调节蛇的移动速度
+		for (i = Len; i >= 0; i--)														 //蛇身移动(讲上一个蛇身的坐标移至下一个蛇身)
 		{
-			snake[i + 1][0] = snake[i][0];
-			snake[i + 1][1] = snake[i][1];
+			Snake[i + 1][0] = Snake[i][0];
+			Snake[i + 1][1] = Snake[i][1];
 		}
 		if (_kbhit())																	 //按键激活
 		{
@@ -165,38 +167,38 @@ void ctrl_snake()
 			{
 			case 'w':
 			case 'W':
-				snake[0][1]--;
+				Snake[0][1]--;
 			break;
 			case 's':
 			case 'S':
-				snake[0][1]++;
+				Snake[0][1]++;
 			break;
 			case 'a':
 			case 'A':
-				snake[0][0]--;
+				Snake[0][0]--;
 			break;
 			case 'd':
 			case 'D':
-				snake[0][0]++;
+				Snake[0][0]++;
 			break;
 			default:																	  //保存按键方向									
 				switch (dir)
 				{
 				case 'w':
 				case 'W':
-					snake[0][1]--;
+					Snake[0][1]--;
 					break;
 				case 's':
 				case 'S':
-					snake[0][1]++;
+					Snake[0][1]++;
 					break;
 				case 'a':
 				case 'A':
-					snake[0][0]--;
+					Snake[0][0]--;
 					break;
 				case 'd':
 				case 'D':
-					snake[0][0]++;
+					Snake[0][0]++;
 					break;
 			break;
 				}
@@ -207,34 +209,52 @@ void ctrl_snake()
 void eat_apple()
 {
 	prt_apple();
-	score++;
+	Score++;
+	Len++;
 	showstate();
 }
 
 /*蛇撞墙*/
 void wall()
 {
-
+	color(RED_RED);
+	system("clr");
+	gotoxy(11, 11);
+	printf("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOPS!SORRY,BUT,GAME OVER.\nPRESS ANY KEY TO CONTINUE.");
+	while (kbhit());
 }
 
 /*达到最大蛇长胜利*/
 void win()
 {
-
+	color(RED_RED);
+	system("clr");
+	gotoxy(11, 11);
+	printf("WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW!YOU WIN!\nPRESS ANY KEY TO CONTINUE.");
+	while (kbhit());
 }
 
 /*询问是否继续*/
 int continue_yn()
 {
-
-	return 1;												//返回是否继续
+	char input;
+	color(BLACK_GREEN);
+	system("clr");
+	gotoxy(0, 0);
+	do
+	{
+		input = 0;
+		printf("WOULD YOU LIKE TO PLAY AGAIN? Y/N\n");
+		input = getchar();
+	} while (input == 'Y' || input == 'y' || input == 'N' || input == 'n');
+	return input;												//返回是否继续
 }
 
 int main()
 {
 	while (1)												//游戏整体循环
 	{	
-			switch (flag=prt_menu())						//显示主菜单
+			switch (Flag=prt_menu())						//显示主菜单
 			{
 			case 'S':
 			case 's':
@@ -246,27 +266,26 @@ int main()
 			default:
 				return 0;
 			}
-		init();	
-		//初始化参数
+		init();												//初始化参数
 		while (1)											//地图关卡循环(屏幕刷新循环)
 		{
 			ctrl_snake();									//控制蛇
-			if (snake[0][0] == 0 || snake[0][0] == 21 || snake[0][1] == 0 || snake[0][1] == 21)		//判断是否撞墙(蛇头坐标是否与墙重合)
+			if (Snake[0][0] == 0 || Snake[0][0] == 21 || Snake[0][1] == 0 || Snake[0][1] == 21)		//判断是否撞墙(蛇头坐标是否与墙重合)
 			{
 				wall();										//显示撞墙后效果
 				break;										//退出屏幕刷新循环
 			}
-			if (snake[0][0] == apple_x && snake[0][1] == apple_y)
+			if (Snake[0][0] == Apple_x && Snake[0][1] == Apple_y)
 			{
 				eat_apple();
 			}
-			if (len == 10)									//判断是否达到胜利条件(蛇长达到10)
+			if (Len == 9)									//判断是否达到胜利条件(蛇长达到10)
 			{
 				win();										//显示胜利效果
 				break;										//退出屏幕刷新循环
 			}
 		}
-		if (continue_yn())
+		if (continue_yn()=='Y'||continue_yn=='y')
 		{
 			return 0;											//退出游戏循环
 		}
